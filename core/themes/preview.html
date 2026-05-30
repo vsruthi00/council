@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Council UI Theme Presets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #f0f1f3;
+    color: #1a1a1a;
+    padding: 48px 32px;
+    line-height: 1.5;
+  }
+  .page-head { max-width: 1200px; margin: 0 auto 40px; }
+  .page-head h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .page-head p { color: #5a6270; margin-top: 8px; font-size: 15px; max-width: 640px; }
+  .grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 28px;
+  }
+
+  /* shared card shell */
+  .theme {
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .theme-label {
+    padding: 14px 20px; background: #1a1a1a; color: #fff;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .theme-label .name { font-weight: 600; font-size: 15px; }
+  .theme-label .tag { font-size: 12px; color: #9aa1ad; }
+
+  /* demo surface */
+  .demo { padding: 24px; }
+  .demo h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .demo .lede { font-size: 14px; margin-bottom: 18px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .field input {
+    width: 100%; padding: 10px 12px; font-size: 14px; font-family: inherit;
+    border: 1px solid; outline: none;
+  }
+  .btn-row { display: flex; gap: 10px; margin-bottom: 18px; }
+  .btn { padding: 10px 18px; font-size: 14px; font-weight: 600; font-family: inherit; border: 1px solid transparent; cursor: pointer; }
+  .mini-card { padding: 14px 16px; border: 1px solid; }
+  .mini-card .mc-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .mini-card .mc-body { font-size: 13px; }
+  .badge { display: inline-block; padding: 3px 10px; font-size: 12px; font-weight: 600; margin-bottom: 14px; }
+  .swatches { display: flex; gap: 8px; margin-top: 18px; }
+  .sw { width: 100%; height: 28px; border-radius: 4px; }
+
+  /* ---------- THEME 1: MINIMAL LIGHT ---------- */
+  .t-minimal .demo { background: #ffffff; color: #111827; }
+  .t-minimal h2 { font-family: 'Inter', sans-serif; }
+  .t-minimal .lede { color: #6b7280; }
+  .t-minimal .field label { color: #6b7280; }
+  .t-minimal .field input { border-color: #e5e7eb; border-radius: 8px; }
+  .t-minimal .field input:focus { border-color: #2563eb; }
+  .t-minimal .btn-primary { background: #2563eb; color: #fff; border-radius: 8px; }
+  .t-minimal .btn-secondary { background: #fff; color: #111827; border-color: #e5e7eb; border-radius: 8px; }
+  .t-minimal .mini-card { border-color: #e5e7eb; border-radius: 8px; background: #fafafa; }
+  .t-minimal .mc-body { color: #6b7280; }
+  .t-minimal .badge { background: #eff6ff; color: #2563eb; border-radius: 6px; }
+
+  /* ---------- THEME 2: WARM EDITORIAL ---------- */
+  .t-warm .demo { background: #faf6f0; color: #2b2520; }
+  .t-warm h2 { font-family: 'Newsreader', Georgia, serif; font-weight: 600; font-size: 23px; }
+  .t-warm .lede { color: #6b6258; font-family: 'Newsreader', Georgia, serif; }
+  .t-warm .field label { color: #8a7d6d; }
+  .t-warm .field input { border-color: #e7ddd0; border-radius: 6px; background: #fffdfa; }
+  .t-warm .field input:focus { border-color: #b85c38; }
+  .t-warm .btn-primary { background: #b85c38; color: #fff; border-radius: 6px; }
+  .t-warm .btn-secondary { background: #fffdfa; color: #2b2520; border-color: #d8cbb8; border-radius: 6px; }
+  .t-warm .mini-card { border-color: #e7ddd0; border-radius: 6px; background: #fffdfa; }
+  .t-warm .mc-body { color: #6b6258; }
+  .t-warm .badge { background: #f3e6dc; color: #b85c38; border-radius: 4px; }
+
+  /* ---------- THEME 3: MODERN DARK ---------- */
+  .t-dark .demo { background: #0f1117; color: #e6e8ec; }
+  .t-dark h2 { font-family: 'Inter', sans-serif; }
+  .t-dark .lede { color: #9aa1ad; }
+  .t-dark .field label { color: #9aa1ad; }
+  .t-dark .field input { border-color: #262a33; border-radius: 10px; background: #181b23; color: #e6e8ec; }
+  .t-dark .field input:focus { border-color: #7c6cff; }
+  .t-dark .btn-primary { background: #7c6cff; color: #fff; border-radius: 10px; box-shadow: 0 4px 14px rgba(124,108,255,0.4); }
+  .t-dark .btn-secondary { background: #181b23; color: #e6e8ec; border-color: #262a33; border-radius: 10px; }
+  .t-dark .mini-card { border-color: #262a33; border-radius: 10px; background: #181b23; }
+  .t-dark .mc-body { color: #9aa1ad; }
+  .t-dark .badge { background: rgba(124,108,255,0.15); color: #a99bff; border-radius: 6px; }
+
+  /* ---------- THEME 4: SOFT PASTEL ---------- */
+  .t-pastel .demo { background: #f7f5ff; color: #2e2a3f; }
+  .t-pastel h2 { font-family: 'Nunito', sans-serif; font-weight: 700; }
+  .t-pastel .lede { color: #7a7490; }
+  .t-pastel .field label { color: #8a83a3; }
+  .t-pastel .field input { border-color: #ece8fb; border-radius: 14px; background: #fff; }
+  .t-pastel .field input:focus { border-color: #8b7cf0; }
+  .t-pastel .btn { font-family: 'Nunito', sans-serif; }
+  .t-pastel .btn-primary { background: #8b7cf0; color: #fff; border-radius: 14px; }
+  .t-pastel .btn-secondary { background: #e8fbf2; color: #2e8b67; border-color: #c8f0dd; border-radius: 14px; }
+  .t-pastel .mini-card { border-color: #ece8fb; border-radius: 14px; background: #fff; }
+  .t-pastel .mc-body { color: #7a7490; }
+  .t-pastel .badge { background: #ece8fb; color: #6a5acd; border-radius: 12px; }
+
+  /* ---------- THEME 5: PROFESSIONAL ---------- */
+  .t-pro .demo { background: #ffffff; color: #14233a; }
+  .t-pro h2 { font-family: 'Inter', sans-serif; font-weight: 700; }
+  .t-pro .lede { color: #5a6b80; }
+  .t-pro .field label { color: #5a6b80; }
+  .t-pro .field input { border-color: #d8dee6; border-radius: 4px; }
+  .t-pro .field input:focus { border-color: #1f5fa8; }
+  .t-pro .btn-primary { background: #1f5fa8; color: #fff; border-radius: 4px; }
+  .t-pro .btn-secondary { background: #fff; color: #14233a; border-color: #d8dee6; border-radius: 4px; }
+  .t-pro .mini-card { border-color: #d8dee6; border-radius: 4px; background: #f4f6f8; }
+  .t-pro .mc-body { color: #5a6b80; }
+  .t-pro .badge { background: #e7eff8; color: #1f5fa8; border-radius: 3px; }
+
+  /* ---------- THEME 6: NATURAL ---------- */
+  .t-natural .demo { background: #f4f1e9; color: #2c352c; }
+  .t-natural h2 { font-family: 'Inter', sans-serif; font-weight: 600; }
+  .t-natural .lede { color: #6e7468; }
+  .t-natural .field label { color: #7a8270; }
+  .t-natural .field input { border-color: #e2ddd0; border-radius: 10px; background: #fbfaf4; }
+  .t-natural .field input:focus { border-color: #4f7a5a; }
+  .t-natural .btn-primary { background: #4f7a5a; color: #fff; border-radius: 10px; }
+  .t-natural .btn-secondary { background: #fbfaf4; color: #8a5a34; border-color: #ddd0bd; border-radius: 10px; }
+  .t-natural .mini-card { border-color: #e2ddd0; border-radius: 10px; background: #fbfaf4; }
+  .t-natural .mc-body { color: #6e7468; }
+  .t-natural .badge { background: #e4ebe0; color: #3f6349; border-radius: 8px; }
+</style>
+</head>
+<body>
+  <div class="page-head">
+    <h1>Council UI Theme Presets</h1>
+    <p>Five general-purpose, clean defaults the UI/UX role can apply when a user does not set house rules. Each is built on the same baked principles (contrast, hierarchy, spacing, accessible focus states). Pick one as the starting point, or override with custom house rules.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- 1 -->
+    <div class="theme t-minimal">
+      <div class="theme-label"><span class="name">1. Minimal Light</span><span class="tag">SaaS, dashboards, dev tools</span></div>
+      <div class="demo">
+        <span class="badge">New</span>
+        <h2>Clean and Neutral</h2>
+        <p class="lede">Generous whitespace, one calm accent, system sans. Gets out of the way of the content.</p>
+        <div class="field"><label>Email Address</label><input value="you@example.com"></div>
+        <div class="btn-row"><button class="btn btn-primary">Continue</button><button class="btn btn-secondary">Cancel</button></div>
+        <div class="mini-card"><div class="mc-title">Project Synced</div><div class="mc-body">All changes saved a moment ago.</div></div>
+        <div class="swatches"><div class="sw" style="background:#2563eb"></div><div class="sw" style="background:#111827"></div><div class="sw" style="background:#6b7280"></div><div class="sw" style="background:#e5e7eb"></div><div class="sw" style="background:#fafafa"></div></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="theme t-warm">
+      <div class="theme-label"><span class="name">2. Warm Editorial</span><span class="tag">Content, blogs, education</span></div>
+      <div class="demo">
+        <span class="badge">Featured</span>
+        <h2>Readable and Inviting</h2>
+        <p class="lede">Warm paper background, serif headings over sans body, an earthy accent. Built for reading.</p>
+        <div class="field"><label>Email Address</label><input value="you@example.com"></div>
+        <div class="btn-row"><button class="btn btn-primary">Subscribe</button><button class="btn btn-secondary">Later</button></div>
+        <div class="mini-card"><div class="mc-title">Latest Issue</div><div class="mc-body">Posted three days ago, six minute read.</div></div>
+        <div class="swatches"><div class="sw" style="background:#b85c38"></div><div class="sw" style="background:#2b2520"></div><div class="sw" style="background:#6b6258"></div><div class="sw" style="background:#e7ddd0"></div><div class="sw" style="background:#fffdfa"></div></div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="theme t-dark">
+      <div class="theme-label"><span class="name">3. Modern Dark</span><span class="tag">Developer, technical, night use</span></div>
+      <div class="demo">
+        <span class="badge">Beta</span>
+        <h2>High Contrast Dark</h2>
+        <p class="lede">Deep slate surfaces, a vivid accent with a soft glow, crisp sans. Easy on the eyes at 2am.</p>
+        <div class="field"><label>Email Address</label><input value="you@example.com"></div>
+        <div class="btn-row"><button class="btn btn-primary">Deploy</button><button class="btn btn-secondary">Logs</button></div>
+        <div class="mini-card"><div class="mc-title">Build Passing</div><div class="mc-body">Pipeline finished in 42 seconds.</div></div>
+        <div class="swatches"><div class="sw" style="background:#7c6cff"></div><div class="sw" style="background:#e6e8ec"></div><div class="sw" style="background:#9aa1ad"></div><div class="sw" style="background:#262a33"></div><div class="sw" style="background:#181b23"></div></div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="theme t-pastel">
+      <div class="theme-label"><span class="name">4. Soft Pastel</span><span class="tag">Consumer, lifestyle, friendly</span></div>
+      <div class="demo">
+        <span class="badge">Popular</span>
+        <h2>Friendly and Rounded</h2>
+        <p class="lede">Light lavender base, soft mint secondary, big radius. Approachable and gentle.</p>
+        <div class="field"><label>Email Address</label><input value="you@example.com"></div>
+        <div class="btn-row"><button class="btn btn-primary">Get Started</button><button class="btn btn-secondary">Tour</button></div>
+        <div class="mini-card"><div class="mc-title">Welcome Back</div><div class="mc-body">You have three new updates waiting.</div></div>
+        <div class="swatches"><div class="sw" style="background:#8b7cf0"></div><div class="sw" style="background:#5fcf9e"></div><div class="sw" style="background:#2e2a3f"></div><div class="sw" style="background:#ece8fb"></div><div class="sw" style="background:#f7f5ff"></div></div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="theme t-pro">
+      <div class="theme-label"><span class="name">5. Professional</span><span class="tag">Business, fintech, enterprise</span></div>
+      <div class="demo">
+        <span class="badge">Verified</span>
+        <h2>Structured and Trusted</h2>
+        <p class="lede">Crisp navy on white, tight radius, restrained palette. Reads as serious and dependable.</p>
+        <div class="field"><label>Email Address</label><input value="you@example.com"></div>
+        <div class="btn-row"><button class="btn btn-primary">Submit</button><button class="btn btn-secondary">Reset</button></div>
+        <div class="mini-card"><div class="mc-title">Account Active</div><div class="mc-body">Next billing date is 14.June.2026.</div></div>
+        <div class="swatches"><div class="sw" style="background:#1f5fa8"></div><div class="sw" style="background:#14233a"></div><div class="sw" style="background:#5a6b80"></div><div class="sw" style="background:#d8dee6"></div><div class="sw" style="background:#f4f6f8"></div></div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="theme t-natural">
+      <div class="theme-label"><span class="name">6. Natural</span><span class="tag">Wellness, education, lifestyle, eco</span></div>
+      <div class="demo">
+        <span class="badge">Calm</span>
+        <h2>Organic and Grounded</h2>
+        <p class="lede">Oat and linen base, sage green accent, a warm clay secondary. Earthy, soft, and unhurried.</p>
+        <div class="field"><label>Email Address</label><input value="you@example.com"></div>
+        <div class="btn-row"><button class="btn btn-primary">Begin</button><button class="btn btn-secondary">Explore</button></div>
+        <div class="mini-card"><div class="mc-title">Session Booked</div><div class="mc-body">See you on 14.June.2026 at 4pm.</div></div>
+        <div class="swatches"><div class="sw" style="background:#4f7a5a"></div><div class="sw" style="background:#8a5a34"></div><div class="sw" style="background:#2c352c"></div><div class="sw" style="background:#e2ddd0"></div><div class="sw" style="background:#f4f1e9"></div></div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
