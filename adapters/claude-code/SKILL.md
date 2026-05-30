@@ -1,0 +1,125 @@
+---
+name: council
+description: Use to get an unbiased, multi-role review of any decision, design choice, or open question. Invoke when the user says "should I", "which approach", "help me decide", "decide between", "design decision", "architecture review", "play devil's advocate", "get a critical review", "get an unbiased review", "brainstorm options", or any time a choice has meaningful trade-offs. Also invoke on questions like "is this a good idea", "what am I missing", "poke holes in this plan", or "stress-test this approach". Convenes a council of specialist roles that deliberate in parallel, applying anti-sycophancy rules, and produces a structured decision record.
+---
+
+# council
+
+A multi-role deliberation skill that convenes specialist subagents, runs them in parallel with anti-sycophancy guards, and emits a structured decision record with ranked options, recorded dissent, and any hard vetoes.
+
+## Command
+
+```
+/council <question>
+```
+
+Options:
+
+- `--with <role,role,...>` -- force-add one or more roles beyond those selected by domain classification.
+- `--depth deep` -- force a review and escalation round even when no genuine conflict is detected in the first pass.
+
+## Four-stage flow
+
+### Stage 1: convening (`core/prompts/convening.md`)
+
+The Chairman reads the question, classifies the domain (frontend, backend, database, security/auth, full-stack, ml, or general), and assembles the roster. The 6 core roles are always included: chairman, first-principles, contrarian, empiricist, executor, outsider. Bench roles are added per domain (for example, security/auth adds security-redteam as lead, plus compliance, api-contract, pre-mortem).
+
+`--with <roles>` force-adds the named roles to the roster. `--depth deep` forces a review round after the first pass.
+
+The Chairman announces the roster in one line and waits for the user to veto or add roles before proceeding.
+
+### Stage 2: deliberation (`core/prompts/deliberation.md`)
+
+The Chairman dispatches every convened role as its own subagent, in parallel, blind to each other. Each subagent is loaded with only its own files plus applicable overlays (see "Role loading" below). The model used is the one named in that role's `role.md`.
+
+After all contributions are collected, genuine conflicts (two roles reaching opposed conclusions on the same point) are identified. If conflicts exist, one targeted escalation round is run: the conflicting roles see each other's anonymized contribution and rebut. The escalation round is capped at one. With `--depth deep`, this round runs regardless.
+
+### Stage 3: anti-sycophancy (`core/prompts/anti-sycophancy.md`)
+
+Applied throughout deliberation. Key rules: contrarian and empiricist must each return at least 3 substantive objections; at least one role must steelman the option the user did not favor; the empiricist must state what observation would falsify the recommendation; options are ranked against criteria fixed before deliberation, not after; security-redteam and compliance hold a hard veto (NO-GO) that the Chairman cannot override.
+
+### Stage 4: synthesis (`core/prompts/synthesis.md`)
+
+The Chairman collects all contributions and escalation rebuttals, resolves conflicts by reasoning (weighting the domain lead specialist more heavily), ranks options against the named criteria, checks for NO-GO floor violations, and emits the decision record.
+
+## Role loading
+
+Each role subagent is loaded with exactly these files, no more:
+
+1. `core/roles/<role>/role.md` -- mandate, output format, model.
+2. `core/roles/<role>/knowledge.md` -- default rubric (baked).
+3. Applicable overlays in this precedence order (project wins):
+   - `<project>/.council/house-rules/<role>.md` (project overlay, highest priority)
+   - `~/.council/house-rules/<role>.md` (user-global overlay)
+   - baked `core/roles/<role>/knowledge.md` is the baseline when no overlay exists.
+4. If the project uses presets or a theme, pass those values from `<project>/.council/presets.md` and `<project>/.council/theme.md` where relevant to the role's concern.
+
+Never load another role's files into a role subagent. Never load the full repo. The Chairman itself loads only what it needs to orchestrate: the four prompt files and the overlay config for the session.
+
+The 6 core roles are: chairman, first-principles, contrarian, empiricist, executor, outsider.
+The 15 bench roles are: accessibility, api-contract, compliance, data-db, data-engineer, designer-ux, economist, integration, maintainer, ml-scientist, ops-sre, performance, pre-mortem, security-redteam, user-customer.
+
+## Decision record output format
+
+The Chairman emits this structure at the end of synthesis:
+
+```
+Question: <original question>
+
+Roster: <list of convened roles>
+
+Per-role key points:
+  <role>: <condensed key points, 1-3 lines>
+  ...
+
+Conflicts and resolution:
+  <point of conflict>: <which roles conflicted, how resolved, which role's view prevailed and why>
+  (none if no genuine conflicts)
+
+Options ranked:
+  Criteria: <named criteria fixed before deliberation>
+  1. <option> -- <score or reasoning against criteria>
+  2. <option> -- ...
+  ...
+
+Decision: <the chosen option with justification>
+
+Recorded dissent:
+  <role>: <objection maintained after deliberation>
+  (none if all roles accepted the resolution)
+
+Floor violations:
+  <role>: NO-GO -- <reason>
+  (none if no floor violation; if present, the decision is NO-GO regardless of ranking)
+
+Honest limit: all roles run on the same model family and read the same prompt. This reduces sycophancy and broadens coverage but does not replace independent models or outside humans.
+```
+
+If the decision implies build work, append a spec stub:
+
+```
+Spec stub for cadence:
+  Goal: <one-line goal>
+  Constraints: <key constraints from the deliberation>
+  Open questions: <unresolved questions to address in writing-plans>
+```
+
+This matches what `core/prompts/synthesis.md` instructs the Chairman to emit.
+
+## Config
+
+Before running a deliberation on a new project, council may need to know house rules, preset floors, and a theme. How this is collected depends on the environment:
+
+- **Local environment** (`canUseLocalWindow()` returns true in `adapters/claude-code/helper-server/env-detect.js`): offer to open the loopback config helper window (`adapters/claude-code/helper-server/server.js`). The server binds to 127.0.0.1 on an ephemeral port, serves a browser form, and writes overlay files directly into `<project>/.council/`.
+- **Remote or headless** (CI, SSH, cloud sandbox -- `canUseLocalWindow()` returns false): use `core/config/chat-fallback.md`. This Q&A flow collects the same information in chat and writes the same files.
+
+`canUseLocalWindow()` returns false when `REMOTE_SANDBOX`, `CI`, `CODESPACES`, `SSH_CONNECTION`, or `SSH_TTY` is set. In all other cases it returns true.
+
+The user never hand-edits baked ref files under `core/`. The overlay files at `<project>/.council/` and `~/.council/` are the correct place for customization. Config schema and valid preset values are in `core/config/schema.md`.
+
+## Rules
+
+- Dates use DD.Month.YYYY. No emojis, no em dashes.
+- Path base: paths in this file are relative to the repo root (so `core/prompts/convening.md` means the file at that path from the repo root). Paths inside `core/prompts/*.md` and `core/roles/*/role.md` are relative to `core/` (so a reference to `roles/chairman/role.md` inside a core prompt means `core/roles/chairman/role.md`).
+
+Read the relevant `core/prompts/*.md` files and follow them exactly.
