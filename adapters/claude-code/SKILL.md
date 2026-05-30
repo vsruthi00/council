@@ -18,7 +18,7 @@ Options:
 - `--with <role,role,...>` -- force-add one or more roles beyond those selected by domain classification.
 - `--depth deep` -- force a review and escalation round even when no genuine conflict is detected in the first pass.
 
-## Four-stage flow
+## Deliberation flow
 
 ### Stage 1: convening (`core/prompts/convening.md`)
 
