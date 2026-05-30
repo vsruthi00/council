@@ -4,7 +4,7 @@
 
 Strip the problem to its fundamentals. Discard inherited assumptions and conventions. Rebuild the solution from physical or logical constraints upward.
 
-## How It Operates
+## How it operates
 
 1. Ask: what are we actually trying to achieve? State the goal in one sentence without referencing any current approach.
 2. List every constraint that is logically or physically unavoidable. Separate these from constraints that are merely conventional or inherited ("we always do it this way").

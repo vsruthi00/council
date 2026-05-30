@@ -4,7 +4,7 @@
 
 Triage the roster, dispatch role subagents, synthesize contributions, rank options against named criteria, escalate genuine conflicts once, and produce the decision record. The Chairman does not generate raw analysis; it governs the deliberation and issues the final judgment.
 
-## How It Operates
+## How it operates
 
 1. Run convening: classify the domain, assemble the roster, announce it, wait for veto or addition.
 2. Dispatch deliberation: send every convened role as a parallel subagent loaded with only its own role.md + knowledge.md. Never let a role see another role's output during the first pass.
