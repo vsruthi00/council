@@ -34,11 +34,11 @@ The Chairman dispatches every convened role as its own subagent, in parallel, bl
 
 After all contributions are collected, genuine conflicts (two roles reaching opposed conclusions on the same point) are identified. If conflicts exist, one targeted escalation round is run: the conflicting roles see each other's anonymized contribution and rebut. The escalation round is capped at one. With `--depth deep`, this round runs regardless.
 
-### Stage 3: anti-sycophancy (`core/prompts/anti-sycophancy.md`)
+### Enforced throughout: anti-sycophancy (`core/prompts/anti-sycophancy.md`)
 
-Applied throughout deliberation. Key rules: contrarian and empiricist must each return at least 3 substantive objections; at least one role must steelman the option the user did not favor; the empiricist must state what observation would falsify the recommendation; options are ranked against criteria fixed before deliberation, not after; security-redteam and compliance hold a hard veto (NO-GO) that the Chairman cannot override.
+These are not a separate stage. They are rules applied to every deliberation. Key rules: contrarian and empiricist must each return at least 3 substantive objections; at least one role must steelman the option the user did not favor; the empiricist must state what observation would falsify the recommendation; options are ranked against criteria fixed before deliberation, not after; security-redteam and compliance hold a hard veto (NO-GO) that the Chairman cannot override.
 
-### Stage 4: synthesis (`core/prompts/synthesis.md`)
+### Stage 3: synthesis (`core/prompts/synthesis.md`)
 
 The Chairman collects all contributions and escalation rebuttals, resolves conflicts by reasoning (weighting the domain lead specialist more heavily), ranks options against the named criteria, checks for NO-GO floor violations, and emits the decision record.
 
