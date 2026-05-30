@@ -57,6 +57,7 @@ function writePresets(projectDir, { security, accessibility, compliance }) {
   if (security) lines.push(`security: ${security}`);
   if (accessibility) lines.push(`accessibility: ${accessibility}`);
   if (compliance) lines.push(`compliance: ${compliance}`);
+  if (lines.length === 0) return;
   fs.writeFileSync(path.join(councilDir, 'presets.md'), lines.join('\n') + '\n', 'utf8');
 }
 
@@ -71,6 +72,9 @@ function writeTheme(projectDir, theme) {
 
 // Server shutdown timeout in ms (prevents lingering server if no request arrives)
 const SERVER_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+
+// Maximum allowed POST body size in bytes
+const MAX_BODY_BYTES = 512 * 1024; // 512 KB
 
 /**
  * Start the loopback config helper server.
@@ -120,8 +124,21 @@ function startServer(projectDir) {
       tokenUsed = true;
 
       let body = '';
-      req.on('data', (chunk) => { body += chunk; });
+      let bodyLen = 0;
+      req.on('data', (chunk) => {
+        bodyLen += chunk.length;
+        if (bodyLen > MAX_BODY_BYTES) {
+          if (!res.headersSent) {
+            res.writeHead(413, { 'Content-Type': 'text/plain' });
+            res.end('Payload Too Large');
+          }
+          req.destroy();
+          return;
+        }
+        body += chunk;
+      });
       req.on('end', () => {
+        if (bodyLen > MAX_BODY_BYTES) return;
         try {
           const payload = JSON.parse(body);
 
@@ -174,7 +191,8 @@ function startServer(projectDir) {
           // If writeOverlay threw due to bad slug, do NOT shut down - token still consumed
           // but no file was written for that role
         } finally {
-          // Shut down after write (or attempted write)
+          // Clear the fallback shutdown timer and close immediately
+          clearTimeout(shutdownTimer);
           setImmediate(() => server.close());
         }
       });
@@ -191,11 +209,7 @@ function startServer(projectDir) {
   }, SERVER_TIMEOUT_MS);
   shutdownTimer.unref(); // Do not block process exit
 
-  server.listen(0, '127.0.0.1', () => {
-    const { port } = server.address();
-    server._councilPort = port;
-    server._councilToken = token;
-  });
+  server.listen(0, '127.0.0.1');
 
   return new Promise((resolve, reject) => {
     server.once('listening', () => {

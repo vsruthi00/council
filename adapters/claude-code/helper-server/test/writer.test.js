@@ -3,7 +3,7 @@ const { test } = require('node:test');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { writeOverlay, isValidSlug, validateToken } = require('../server.js');
+const { writeOverlay, writePresets, isValidSlug, validateToken } = require('../server.js');
 
 test('writes house-rule file under .council/house-rules', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'council-'));
@@ -59,4 +59,21 @@ test('validateToken returns false for non-matching token', () => {
 test('validateToken returns false for empty token', () => {
   assert.ok(!validateToken('abc123', ''));
   assert.ok(!validateToken('abc123', undefined));
+});
+
+test('writePresets writes file when at least one preset is provided', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'council-'));
+  writePresets(dir, { security: 'high' });
+  const out = path.join(dir, '.council', 'presets.md');
+  assert.ok(fs.existsSync(out));
+  assert.match(fs.readFileSync(out, 'utf8'), /security: high/);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('writePresets does not write file when no presets are provided', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'council-'));
+  writePresets(dir, {});
+  const out = path.join(dir, '.council', 'presets.md');
+  assert.ok(!fs.existsSync(out));
+  fs.rmSync(dir, { recursive: true, force: true });
 });
