@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Council Config</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #fafafa;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --secondary: #eff6ff;
+      --radius: 8px;
+    }
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .shell {
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    header p {
+      color: var(--muted);
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    section > p.lede {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Theme picker */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 500px) {
+      .theme-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .theme-card {
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+
+    .theme-card:hover {
+      border-color: var(--accent);
+    }
+
+    .theme-card.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--secondary);
+    }
+
+    .theme-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .theme-swatch {
+      height: 52px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .swatch-bg  { flex: 3; }
+    .swatch-surface { flex: 2; }
+    .swatch-accent  { flex: 1; }
+
+    .theme-label {
+      padding: 0.5rem 0.6rem 0.6rem;
+      background: var(--surface);
+    }
+
+    .theme-label strong {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .theme-label span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      line-height: 1.35;
+    }
+
+    /* Preset rows */
+    .preset-group {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .preset-group-header {
+      background: var(--surface);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .preset-group-header strong {
+      font-size: 0.9rem;
+    }
+
+    .preset-group-header p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .preset-options {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preset-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+
+    .preset-option:last-child {
+      border-bottom: none;
+    }
+
+    .preset-option:hover {
+      background: var(--secondary);
+    }
+
+    .preset-option input[type="radio"] {
+      margin-top: 0.2rem;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .preset-option .option-text strong {
+      font-size: 0.875rem;
+    }
+
+    .preset-option .option-text span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .floor-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 0.5rem 1rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      font-style: italic;
+    }
+
+    /* House rules */
+    .role-group {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .role-group-header {
+      background: var(--surface);
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .role-group-header strong {
+      font-size: 0.875rem;
+    }
+
+    .role-group-header .toggle-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .role-body {
+      padding: 0.75rem 1rem;
+    }
+
+    .role-body p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .role-body textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.6rem 0.75rem;
+      font-size: 0.85rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+      transition: border-color 0.15s;
+    }
+
+    .role-body textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--secondary);
+    }
+
+    .collapsed .role-body {
+      display: none;
+    }
+
+    /* Submit */
+    .submit-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding: 1.5rem 0 2rem;
+    }
+
+    button[type="submit"] {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.65rem 1.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.15s;
+    }
+
+    button[type="submit"]:hover {
+      opacity: 0.88;
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .status-msg {
+      font-size: 0.875rem;
+      color: var(--muted);
+      align-self: center;
+    }
+
+    .status-msg.ok { color: #16a34a; }
+    .status-msg.err { color: #dc2626; }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <h1>Council Config</h1>
+    <p>Set your project's theme, preset tiers, and per-role standing rules. These are written to <code>.council/</code> and used in every council session for this project.</p>
+  </header>
+
+  <form id="config-form">
+
+    <!-- THEME -->
+    <section id="section-theme">
+      <h2>Theme</h2>
+      <p class="lede">Pick the visual theme for council output and this config window.</p>
+      <div class="theme-grid">
+
+        <label class="theme-card selected" data-theme="minimal-light">
+          <input type="radio" name="theme" value="minimal-light" checked>
+          <div class="theme-swatch">
+            <div class="swatch-bg"    style="background:#ffffff"></div>
+            <div class="swatch-surface" style="background:#fafafa"></div>
+            <div class="swatch-accent"  style="background:#2563eb"></div>
+          </div>
+          <div class="theme-label">
+            <strong>Minimal Light</strong>
+            <span>Clean white canvas, high contrast. Best for focus and documentation.</span>
+          </div>
+        </label>
+
+        <label class="theme-card" data-theme="warm-editorial">
+          <input type="radio" name="theme" value="warm-editorial">
+          <div class="theme-swatch">
+            <div class="swatch-bg"    style="background:#faf6f0"></div>
+            <div class="swatch-surface" style="background:#fffdfa"></div>
+            <div class="swatch-accent"  style="background:#b85c38"></div>
+          </div>
+          <div class="theme-label">
+            <strong>Warm Editorial</strong>
+            <span>Warm off-white, amber accents. Best for design and writing.</span>
+          </div>
+        </label>
+
+        <label class="theme-card" data-theme="modern-dark">
+          <input type="radio" name="theme" value="modern-dark">
+          <div class="theme-swatch">
+            <div class="swatch-bg"    style="background:#0f1117"></div>
+            <div class="swatch-surface" style="background:#181b23"></div>
+            <div class="swatch-accent"  style="background:#7c6cff"></div>
+          </div>
+          <div class="theme-label">
+            <strong>Modern Dark</strong>
+            <span>Dark surface, vibrant accents. Best for engineering work.</span>
+          </div>
+        </label>
+
+        <label class="theme-card" data-theme="soft-pastel">
+          <input type="radio" name="theme" value="soft-pastel">
+          <div class="theme-swatch">
+            <div class="swatch-bg"    style="background:#f7f5ff"></div>
+            <div class="swatch-surface" style="background:#ffffff"></div>
+            <div class="swatch-accent"  style="background:#8b7cf0"></div>
+          </div>
+          <div class="theme-label">
+            <strong>Soft Pastel</strong>
+            <span>Muted pastels, gentle contrast. Best for education and review.</span>
+          </div>
+        </label>
+
+        <label class="theme-card" data-theme="professional">
+          <input type="radio" name="theme" value="professional">
+          <div class="theme-swatch">
+            <div class="swatch-bg"    style="background:#ffffff"></div>
+            <div class="swatch-surface" style="background:#f4f6f8"></div>
+            <div class="swatch-accent"  style="background:#1f5fa8"></div>
+          </div>
+          <div class="theme-label">
+            <strong>Professional</strong>
+            <span>Cool grays, blue accents, tight density. Best for business.</span>
+          </div>
+        </label>
+
+        <label class="theme-card" data-theme="natural">
+          <input type="radio" name="theme" value="natural">
+          <div class="theme-swatch">
+            <div class="swatch-bg"    style="background:#f4f1e9"></div>
+            <div class="swatch-surface" style="background:#fbfaf4"></div>
+            <div class="swatch-accent"  style="background:#4f7a5a"></div>
+          </div>
+          <div class="theme-label">
+            <strong>Natural</strong>
+            <span>Earth tones, organic feel. Best for wellness and lifestyle.</span>
+          </div>
+        </label>
+
+      </div>
+    </section>
+
+    <!-- PRESETS -->
+    <section id="section-presets">
+      <h2>Presets</h2>
+      <p class="lede">Select the tiers that match your project's exposure and audience. These set floors for every role in this session.</p>
+
+      <!-- Security -->
+      <div class="preset-group">
+        <div class="preset-group-header">
+          <strong>Security</strong>
+          <p>Select the tier that matches your project's exposure.</p>
+        </div>
+        <div class="preset-options">
+          <label class="preset-option">
+            <input type="radio" name="preset-security" value="low">
+            <div class="option-text">
+              <strong>Low</strong>
+              <span>"Just me or a small open project." Basics only.</span>
+            </div>
+          </label>
+          <label class="preset-option">
+            <input type="radio" name="preset-security" value="medium" checked>
+            <div class="option-text">
+              <strong>Medium (default)</strong>
+              <span>"Real users, real data." Per-user access, encryption in transit, login protection.</span>
+            </div>
+          </label>
+          <label class="preset-option">
+            <input type="radio" name="preset-security" value="high">
+            <div class="option-text">
+              <strong>High</strong>
+              <span>"Money, sensitive data, or a live business." E2E where it matters, audit logs, strict access review, COPPA/GDPR awareness.</span>
+            </div>
+          </label>
+        </div>
+        <div class="floor-note">Floor: no secrets in git, real auth, row-level access. This applies regardless of tier.</div>
+      </div>
+
+      <!-- Accessibility -->
+      <div class="preset-group">
+        <div class="preset-group-header">
+          <strong>Accessibility</strong>
+          <p>Select the WCAG conformance level that fits your audience.</p>
+        </div>
+        <div class="preset-options">
+          <label class="preset-option">
+            <input type="radio" name="preset-accessibility" value="a">
+            <div class="option-text">
+              <strong>Basic (A)</strong>
+              <span>"Lowest bar." Rarely right for public.</span>
+            </div>
+          </label>
+          <label class="preset-option">
+            <input type="radio" name="preset-accessibility" value="aa" checked>
+            <div class="option-text">
+              <strong>Standard (AA) (default)</strong>
+              <span>"Works for almost everyone."</span>
+            </div>
+          </label>
+          <label class="preset-option">
+            <input type="radio" name="preset-accessibility" value="aaa">
+            <div class="option-text">
+              <strong>Strict (AAA)</strong>
+              <span>"Maximum inclusion."</span>
+            </div>
+          </label>
+        </div>
+        <div class="floor-note">Floor: AA on public UI. This applies regardless of tier.</div>
+      </div>
+
+      <!-- Compliance -->
+      <div class="preset-group">
+        <div class="preset-group-header">
+          <strong>Compliance</strong>
+          <p>Select the compliance posture that matches your data handling.</p>
+        </div>
+        <div class="preset-options">
+          <label class="preset-option">
+            <input type="radio" name="preset-compliance" value="off">
+            <div class="option-text">
+              <strong>Off</strong>
+              <span>"No personal data."</span>
+            </div>
+          </label>
+          <label class="preset-option">
+            <input type="radio" name="preset-compliance" value="standard" checked>
+            <div class="option-text">
+              <strong>Standard (default)</strong>
+              <span>"Normal personal data." Consent, deletion, retention.</span>
+            </div>
+          </label>
+          <label class="preset-option">
+            <input type="radio" name="preset-compliance" value="strict">
+            <div class="option-text">
+              <strong>Strict</strong>
+              <span>"Regulated or sensitive data." Lawful-basis tracking, minimization, breach process.</span>
+            </div>
+          </label>
+        </div>
+        <div class="floor-note">Floor: no PII in logs/client, lawful basis to hold data. This applies regardless of tier.</div>
+      </div>
+
+    </section>
+
+    <!-- HOUSE RULES -->
+    <section id="section-house-rules">
+      <h2>House Rules</h2>
+      <p class="lede">Any standing rules for a role? For example: always use [technology], never propose [pattern], assume [constraint]. Leave blank to use the default rubric. Click a role to expand it.</p>
+
+      <div id="roles-list">
+        <!-- Roles are rendered by JS below -->
+      </div>
+    </section>
+
+    <div class="submit-bar">
+      <span class="status-msg" id="status-msg"></span>
+      <button type="submit" id="save-btn">Save Config</button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+(function () {
+  // Extract token from URL
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token') || '';
+
+  // Roles to show house-rule inputs for.
+  // Roles with a preset floor are annotated so the floor note is shown.
+  const roles = [
+    { id: 'chairman',        label: 'Chairman',             floor: null },
+    { id: 'contrarian',      label: 'Contrarian',           floor: null },
+    { id: 'designer-ux',     label: 'Designer (UX)',        floor: 'Accessibility' },
+    { id: 'security-redteam',label: 'Security Red Team',    floor: 'Security' },
+    { id: 'accessibility',   label: 'Accessibility',        floor: 'Accessibility' },
+    { id: 'compliance',      label: 'Compliance',           floor: 'Compliance' },
+    { id: 'executor',        label: 'Executor',             floor: null },
+    { id: 'maintainer',      label: 'Maintainer',           floor: null },
+    { id: 'api-contract',    label: 'API Contract',         floor: null },
+    { id: 'data-db',         label: 'Data / DB',            floor: null },
+    { id: 'data-engineer',   label: 'Data Engineer',        floor: null },
+    { id: 'economist',       label: 'Economist',            floor: null },
+    { id: 'empiricist',      label: 'Empiricist',           floor: null },
+    { id: 'first-principles',label: 'First Principles',     floor: null },
+    { id: 'integration',     label: 'Integration',          floor: null },
+    { id: 'ml-scientist',    label: 'ML Scientist',         floor: null },
+    { id: 'ops-sre',         label: 'Ops / SRE',            floor: null },
+    { id: 'outsider',        label: 'Outsider',             floor: null },
+    { id: 'performance',     label: 'Performance',          floor: null },
+    { id: 'pre-mortem',      label: 'Pre-Mortem',           floor: null },
+    { id: 'user-customer',   label: 'User / Customer',      floor: null },
+  ];
+
+  const list = document.getElementById('roles-list');
+
+  roles.forEach(function (role) {
+    const group = document.createElement('div');
+    group.className = 'role-group collapsed';
+    group.dataset.roleId = role.id;
+
+    const floorHint = role.floor
+      ? '<p class="floor-note" style="margin-top:0.4rem;padding:0">Note: the ' + role.floor + ' floor applies to this role and cannot be removed by a house rule.</p>'
+      : '';
+
+    group.innerHTML =
+      '<div class="role-group-header">' +
+        '<strong>' + role.label + '</strong>' +
+        '<span class="toggle-hint">Click to expand</span>' +
+      '</div>' +
+      '<div class="role-body">' +
+        '<p>Any standing rules for ' + role.label + '? For example: always use [technology], never propose [pattern], assume [constraint]. Leave blank to use the default rubric.</p>' +
+        floorHint +
+        '<textarea name="houserule-' + role.id + '" placeholder="Leave blank to use the default rubric..."></textarea>' +
+      '</div>';
+
+    const header = group.querySelector('.role-group-header');
+    header.addEventListener('click', function () {
+      const isCollapsed = group.classList.contains('collapsed');
+      group.classList.toggle('collapsed', !isCollapsed);
+      header.querySelector('.toggle-hint').textContent = isCollapsed ? 'Click to collapse' : 'Click to expand';
+    });
+
+    list.appendChild(group);
+  });
+
+  // Theme card selection highlight
+  document.querySelectorAll('.theme-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      document.querySelectorAll('.theme-card').forEach(function (c) {
+        c.classList.remove('selected');
+      });
+      card.classList.add('selected');
+    });
+  });
+
+  // Form submit
+  document.getElementById('config-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('save-btn');
+    const statusMsg = document.getElementById('status-msg');
+    btn.disabled = true;
+    statusMsg.textContent = 'Saving...';
+    statusMsg.className = 'status-msg';
+
+    const form = e.target;
+    const theme = form.querySelector('input[name="theme"]:checked').value;
+    const security = form.querySelector('input[name="preset-security"]:checked').value;
+    const accessibility = form.querySelector('input[name="preset-accessibility"]:checked').value;
+    const compliance = form.querySelector('input[name="preset-compliance"]:checked').value;
+
+    const houseRules = {};
+    roles.forEach(function (role) {
+      const ta = form.querySelector('textarea[name="houserule-' + role.id + '"]');
+      if (ta && ta.value.trim()) {
+        houseRules[role.id] = ta.value.trim();
+      }
+    });
+
+    const payload = {
+      theme: theme,
+      presets: { security: security, accessibility: accessibility, compliance: compliance },
+      houseRules: houseRules
+    };
+
+    fetch('/save?token=' + encodeURIComponent(token), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (data.ok) {
+        statusMsg.textContent = 'Saved. You can close this window.';
+        statusMsg.className = 'status-msg ok';
+        btn.textContent = 'Saved';
+      } else {
+        statusMsg.textContent = 'Error: ' + (data.error || 'unknown error');
+        statusMsg.className = 'status-msg err';
+        btn.disabled = false;
+      }
+    })
+    .catch(function (err) {
+      statusMsg.textContent = 'Network error: ' + err.message;
+      statusMsg.className = 'status-msg err';
+      btn.disabled = false;
+    });
+  });
+})();
+</script>
+</body>
+</html>
