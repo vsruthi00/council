@@ -139,6 +139,27 @@ To run the helper server tests:
 cd adapters/claude-code/helper-server && npm test
 ```
 
+## Structure
+
+```
+council/
+  SKILL.md                     # Claude Code entry point (the skill loads from here)
+  core/                        # platform-agnostic: roles, prompts, presets, themes, config
+    roles/<role>/role.md       # mandate, output format, model per role
+    roles/<role>/knowledge.md  # baked rubric for that role
+    prompts/                   # convening, deliberation, anti-sycophancy, synthesis
+    presets/                   # security, accessibility, compliance tiers and floors
+    themes/                    # six UI theme token files and preview.html
+    config/                    # overlay schema, copy, in-chat fallback
+  adapters/
+    claude-code/
+      helper-server/           # loopback config window (Node, zero dependencies)
+  README.md
+  LICENSE
+```
+
+`SKILL.md` is the Claude Code entry point and reads everything it needs from `core/`. The `core/` directory is platform-agnostic; `adapters/` holds only platform-specific extras (here, the optional config helper server).
+
 ## Install
 
 1. Clone this repo:
@@ -147,7 +168,13 @@ cd adapters/claude-code/helper-server && npm test
    git clone git@github.com:vsruthi00/council.git
    ```
 
-2. Make the skill discoverable by Claude Code. The skill entry point is `adapters/claude-code/SKILL.md`, and it reads its procedures from the repo's `core/` directory, so keep the repo intact rather than copying the `SKILL.md` alone. Place or symlink the repo where Claude Code looks for skills (for example `~/.claude/skills/council/`, or a plugin you load). Confirm `council` shows up in your available skills before continuing.
+2. Make the skill discoverable by Claude Code. Claude Code loads a personal skill from `~/.claude/skills/<name>/SKILL.md`. The entry point `SKILL.md` lives at this repo's root and reads its procedures from `core/`, so symlink the whole repo (keeping it intact) into your skills directory:
+
+   ```
+   ln -s "$(pwd)" ~/.claude/skills/council
+   ```
+
+   Confirm `council` shows up in your available skills before continuing. (If you prefer not to symlink, copy the repo to `~/.claude/skills/council/` instead.)
 
 3. Invoke the skill:
 
@@ -165,6 +192,10 @@ Required Notice: Copyright 2026 Sruthi Valluru (https://github.com/vsruthi00)
 
 See [LICENSE](LICENSE) for the full terms.
 
-## Portability
+## Adapters and Other Agents
 
-council is split into a platform-agnostic `core/` directory and a Claude Code adapter at `adapters/claude-code/`. The `core/` directory contains all roles, prompts, presets, themes, and config schema. Other platforms can write their own adapter against the same `core/` without modifying it. The Claude Code adapter is the only adapter currently available.
+council is split into a platform-agnostic `core/` directory and per-platform adapters. The Claude Code adapter is the root `SKILL.md` plus the optional helper server under `adapters/claude-code/`. All roles, prompts, presets, themes, and config schema live in `core/` and contain no Claude-specific assumptions.
+
+**Claude Code (available now):** install as above. The root `SKILL.md` is the entry point.
+
+**Cursor, Codex, Gemini (planned):** each will get an adapter under `adapters/<platform>/` that points at the same `core/`. To add one, write that platform's skill or command entry so it dispatches the four `core/prompts/*.md` stages and loads each role from `core/roles/<role>/` in an isolated context, exactly as `SKILL.md` describes. The `core/` directory does not change. These adapters are not built yet; the seam is in place so they are a small addition rather than a rewrite.
