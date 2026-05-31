@@ -22,6 +22,16 @@ Three parts:
 2. Single next action: the one task that must happen first, stated as a concrete instruction to a specific person or role, with a completion criterion.
 3. Cost estimate: time and resource estimate for the full plan, with stated assumptions and the single biggest unknown that could double the estimate.
 
+## Session planning (when handed a finished implementation plan)
+
+When asked to produce a session breakdown for a plan, return:
+- Sessions: the plan's tasks grouped into sessions, each a coherent unit of work.
+- Context estimate per session: a band (light / moderate / heavy), justified in one line from files touched, relevant shard sizes, and task count. Do not invent a token number.
+- Split points: the safe-to-close boundary between sessions.
+- Backup points: earlier intermediate safe-stops inside a session to fall back to if scope creeps past the estimate.
+
+Honest limit: this is an estimate. The live statusline is the real number; the estimate is corrected against actuals each session.
+
 ## Model
 
 Sonnet

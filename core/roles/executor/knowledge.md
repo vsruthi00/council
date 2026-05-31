@@ -51,3 +51,33 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **When it applies:** Any time a plan includes a feature or capability justified by "we might need this later" or "it would be nice to have." Challenge every deferred-need item before including it in scope.
 
 **Source:** Beck and Fowler, "Planning Extreme Programming" (2000) - YAGNI principle; Martin, "Agile Software Development" (2002) - scope and simplicity.
+
+---
+
+## Cognitive load and context-window economy
+
+**Principle:** Long sessions degrade model performance as the context window fills. Keep each session within a working budget rather than packing it; a window that is too full produces weaker output, not more of it. Size sessions to leave headroom, and split before the budget is exhausted rather than after.
+
+**When it applies:** Sizing a session breakdown; deciding when to split work into a new session rather than push more into the current window.
+
+**Source:** Miller, 1956 - cognitive load and the limits of working memory; published LLM long-context degradation findings such as "Lost in the Middle", Liu et al. (2023).
+
+---
+
+## Grouping by dependency and shared files
+
+**Principle:** Group tasks that touch the same files or depend on each other into one session, so the same context is loaded once rather than reloaded across sessions. Splitting tightly coupled tasks across sessions forces re-reading the same shards and re-establishing the same mental model, which wastes the budget the split was meant to protect.
+
+**When it applies:** Mapping a plan's tasks onto sessions; choosing where one session ends and the next begins.
+
+**Source:** Cohesion and coupling principles - high cohesion within a unit, low coupling between units; Conway-style locality.
+
+---
+
+## Natural safe-to-close boundaries
+
+**Principle:** A session should end at a passing checkpoint or a committed unit of work, never mid-edit. The boundary between sessions must be a point where the work is consistent and recoverable, so the next session can resume cleanly. Split points fall on these boundaries; backup points are earlier safe-stops within a session to fall back to if scope creeps past the estimate.
+
+**When it applies:** Placing split points and backup points in a session breakdown; deciding whether it is safe to stop.
+
+**Source:** Continuous-integration practice - keep the build green and commit working increments; the user's own session-handoff protocol.
