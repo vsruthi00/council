@@ -2,6 +2,16 @@
 
 council is a Claude Code skill that convenes a panel of specialist roles to deliberate on any decision, design choice, or open question. It enforces anti-sycophancy rules throughout every deliberation and produces a structured decision record with ranked options, recorded dissent, and any hard vetoes.
 
+## The Council Suite
+
+council is one of three companion Claude Code skills that take a unit of work from decision to shipped. Each works on its own; together they compose.
+
+- **council** (this repo) - convene a panel of specialist roles to deliberate a decision and produce a ranked decision record with recorded dissent and hard vetoes.
+- **[cadence](https://github.com/vsruthi00/cadence)** - carry a decision through planning, execution, re-invocation, and a security gate while keeping the context window economical.
+- **[ledger](https://github.com/vsruthi00/ledger)** - replace a single growing handoff file with a sharded project-memory library, so each session and subagent loads only the shards it needs.
+
+council decides; cadence drives the resulting work and re-invokes council when something changes; ledger preserves continuity across sessions.
+
 ## Why
 
 A single model answering a question tends to agree with the framing of the question. council counters that by dispatching multiple roles in parallel, each loaded in isolation, each required to apply a different analytical lens. Roles that are structurally required to attack a proposal (contrarian, empiricist) must return at least three substantive objections. Hard veto roles (security-redteam, compliance) can block a decision regardless of what the other roles conclude. The synthesis step ranks options against criteria that are fixed before deliberation begins, so the winner is not the option the user appeared to favor.
