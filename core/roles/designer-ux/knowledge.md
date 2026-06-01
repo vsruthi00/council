@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any design review, spec evaluation, or component audit.
 
-**Source:** Nielsen, "10 Usability Heuristics for User Interface Design" (1994), nngroup.com.
-
 ---
 
 ## WCAG 2.2 AA Visual Standards
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Text contrast must be at least 4.5:1 (3:1 for large text). Interactive elements need visible focus indicators. Touch targets must be at least 24x24 CSS pixels with adequate spacing. Reading and focus order must match visual order.
 
 **When it applies:** Any UI that ships to users, including internal tools used by non-developers.
-
-**Source:** W3C, "Web Content Accessibility Guidelines (WCAG) 2.2" (2023), criteria 1.4.3, 1.4.11, 2.4.3, 2.5.8.
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Layout and component composition decisions; any time the squint test fails.
 
-**Source:** Wertheimer, "Laws of Organization in Perceptual Forms" (1923); Lidwell et al., "Universal Principles of Design" (2003).
-
 ---
 
 ## Visual Hierarchy and the Squint Test
@@ -39,8 +33,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Blur or squint at the design. The single most important element should still be legible, and the reading flow should be traceable. If everything competes equally, hierarchy is broken. Fix with size, weight, color, spacing, and position before adding decoration.
 
 **When it applies:** Any layout review. Run before proposing decorative changes.
-
-**Source:** Williams, "The Non-Designer's Design Book" (1994) - CRAP principles (contrast, repetition, alignment, proximity).
 
 ---
 
@@ -50,8 +42,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any interactive element: buttons, links, form controls, drag handles.
 
-**Source:** Fitts, "The Information Capacity of the Human Motor System" (1954); MacKenzie, "Fitts' Law as a Research and Design Tool in Human-Computer Interaction" (1992).
-
 ---
 
 ## Hick's Law for Choice Architecture
@@ -59,8 +49,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Decision time grows logarithmically with the number of choices. When a user faces more than seven options at once, split the flow, group choices, or apply progressive disclosure. Every additional option has a real cognitive cost.
 
 **When it applies:** Navigation menus, settings panels, onboarding flows, and any screen presenting simultaneous choices.
-
-**Source:** Hick, "On the Rate of Gain of Information" (1952); Miller, "The Magical Number Seven, Plus or Minus Two" (1956).
 
 ---
 
@@ -70,8 +58,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any design that includes typography (all of them).
 
-**Source:** Bringhurst, "The Elements of Typographic Style" (1992); Refactoring UI by Wathan and Schoger (2018).
-
 ---
 
 ## Motion as Default, Not Afterthought
@@ -79,8 +65,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Every state change should have a transition. Entrances ease out at 150-300 ms. Exits ease in at 100-150 ms. Spring physics for dragging and elastic interactions. Purposeful motion communicates what changed and where focus should go. An interface with no motion feels broken, not minimal.
 
 **When it applies:** Any component with a visible state change: showing, hiding, expanding, loading, navigating.
-
-**Source:** Google, "Material Design Motion" (2021); Apple, "Human Interface Guidelines: Animation" (2023); Kowalski, "Animation" series, emilkowal.ski.
 
 ---
 
@@ -90,8 +74,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any design where interactive and non-interactive elements share the same visual weight; modal and drawer designs.
 
-**Source:** Refactoring UI by Wathan and Schoger (2018) - shadow scale; Google Material Design elevation system (2021).
-
 ---
 
 ## prefers-reduced-motion Compliance
@@ -100,8 +82,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any component that uses CSS transitions, keyframes, JavaScript animation, or Framer Motion.
 
-**Source:** WCAG 2.2 criterion 2.3.3 "Animation from Interactions"; MDN, "prefers-reduced-motion" (2023).
-
 ---
 
 ## Apple HIG and Material Design as Behavioral Contracts
@@ -109,5 +89,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Platform-native UI patterns (iOS, Android, web) set user expectations that are costly to break. Deviating from platform conventions requires a product reason, not just a design preference. Cite which convention is being followed or deliberately broken.
 
 **When it applies:** Any component that corresponds to a native pattern: navigation bars, bottom sheets, dialogs, form controls, gestures.
-
-**Source:** Apple, "Human Interface Guidelines" (2024); Google, "Material Design 3 Components" (2023).

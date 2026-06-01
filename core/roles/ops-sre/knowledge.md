@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any system that will run in production. Observability must be designed in; it cannot be added later without significant rework.
 
-**Source:** Beyer et al., "Site Reliability Engineering" (Google SRE Book, 2016), Chapter 6; Charity Majors, Liz Fong-Jones, and George Miranda, "Observability Engineering" (2022).
-
 ---
 
 ## Sentry for Runtime Error Capture
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Every unhandled exception or runtime error in a production application must produce a Sentry (or equivalent) event with stack trace, context, and user scope. Sentry provides signal that logs alone do not: grouping of related errors, first-seen and regression detection, and release health tracking. Integrate Sentry at the application boundary, not as an afterthought. Configure source maps for frontend code so stack traces are readable.
 
 **When it applies:** Any web application, API server, background worker, or mobile app in production.
-
-**Source:** Sentry documentation (docs.sentry.io); Beyer et al., "Site Reliability Engineering" (2016), Chapter 6 - monitoring distributed systems.
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any service that has users. Define SLOs before the first production incident, not after.
 
-**Source:** Beyer et al., "Site Reliability Engineering" (Google SRE Book, 2016), Chapters 4-5; Kleppmann, "Designing Data-Intensive Applications" (2017), Chapter 1.
-
 ---
 
 ## Deployment Strategies
@@ -39,8 +33,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Blue-green deployment maintains two identical environments; traffic is switched atomically, enabling instant rollback. Canary deployment sends a small percentage of traffic to the new version first, expanding on success. Rolling deployment replaces instances one at a time. Big-bang deployment (all instances at once, no rollback window) is high risk and should not be used for production services. The deployment strategy must include a defined rollback procedure that can be executed in under five minutes for critical services.
 
 **When it applies:** Any production deployment of a change to a running service.
-
-**Source:** Humble and Farley, "Continuous Delivery" (2010), Chapter 8; Kim et al., "The DevOps Handbook" (2016).
 
 ---
 
@@ -50,8 +42,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any component with a defined failure mode (database down, queue backlog, external service unavailable).
 
-**Source:** Beyer et al., "Site Reliability Engineering" (2016), Chapter 12 - being on-call; Chapter 14 - managing incidents.
-
 ---
 
 ## Idempotent Infrastructure
@@ -60,8 +50,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any infrastructure provisioning, configuration management, or deployment automation.
 
-**Source:** HashiCorp, "Terraform: Infrastructure as Code" documentation; Kim et al., "The DevOps Handbook" (2016), Chapter 21.
-
 ---
 
 ## Alert Fatigue and Actionable Alerts
@@ -69,5 +57,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Every alert must correspond to a defined human action. An alert that wakes someone up at 3am and has no corresponding action is noise; it trains engineers to ignore alerts. Review all alerts for: (1) Is this actionable right now? (2) Does the responder know what to do? (3) Is the threshold calibrated to signal real user impact, not infrastructure fluctuation? Alerts that do not meet these criteria must be silenced, converted to dashboard metrics, or demoted to informational logs.
 
 **When it applies:** Any monitoring configuration; any alert rule addition or modification.
-
-**Source:** Beyer et al., "Site Reliability Engineering" (2016), Chapter 6; Rob Ewaschuk, "My Philosophy on Alerting" (Google, 2018).

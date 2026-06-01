@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any design or feature evaluation. Identify the job first, then assess the design against it.
 
-**Source:** Christensen, Hall, Dillon, and Duncan, "Know Your Customers' Jobs to Be Done" (Harvard Business Review, 2016); Ulwick, "Jobs to be Done: Theory to Practice" (2016).
-
 ---
 
 ## User Pain, Not Our Elegance
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** The user's experience of friction, confusion, and frustration is the correct measure of design quality. An implementation that is architecturally clean, technically elegant, or easy to build is irrelevant to the user if it requires them to think, guess, or recover from errors. When evaluating a design, the question is not "is this well-built?" but "does this cause the user unnecessary difficulty?"
 
 **When it applies:** Every user experience finding. The implementation justification is not a valid response to a user pain point.
-
-**Source:** Norman, "The Design of Everyday Things" (1988, revised 2013), Chapter 1 - the psychopathology of everyday things; Krug, "Don't Make Me Think" (3rd ed., 2014).
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any user journey or task flow review.
 
-**Source:** Fogg, "Tiny Habits" (2019) - friction and motivation model; Krug, "Don't Make Me Think" (2014) - usability testing methodology.
-
 ---
 
 ## Onboarding: First Meaningful Action Without Documentation
@@ -39,8 +33,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** A new user who arrives with no prior knowledge must be able to complete the first meaningful action (the action that delivers value) without reading a help article, contacting support, or guessing. If they cannot, the onboarding is broken. Measure this by tracing the path of a first-time user from landing to value with no assistance. Every point where they would need to stop and figure something out is an onboarding defect.
 
 **When it applies:** Any new feature, any sign-up flow, any product that has first-time users.
-
-**Source:** Krug, "Don't Make Me Think" (2014), Chapter 9 - usability testing; Intercom, "The Onboarding Manifesto" (intercom.com) - time-to-value as a metric.
 
 ---
 
@@ -50,8 +42,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Every error state, validation message, and empty state in the product.
 
-**Source:** Norman, "The Design of Everyday Things" (2013), Chapter 5 - error handling; Nielsen, "Error Message Guidelines" (NNGroup, 2001).
-
 ---
 
 ## Accessibility as User Experience
@@ -60,8 +50,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any user experience finding where a segment of users is blocked or impaired.
 
-**Source:** W3C, "Web Content Accessibility Guidelines (WCAG) 2.2" (2023); Horton and Quesenbery, "A Web for Everyone: Designing Accessible User Experiences" (2014).
-
 ---
 
 ## Notification and Interruption Design
@@ -69,5 +57,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Every notification, alert, and message the product sends is an interruption of the user's attention. Interruptions have a cost. The rules: (1) only interrupt for events that require immediate action by the user; (2) batch non-urgent updates; (3) match the urgency level of the channel to the urgency of the message (push notification implies urgent; email implies non-urgent); (4) make it easy to reduce notification frequency. A product that over-notifies trains users to ignore it; a product that under-notifies leaves users uninformed.
 
 **When it applies:** Any product that sends notifications, alerts, emails, or messages to users.
-
-**Source:** Fried and Hansson, "It Doesn't Have to Be Crazy at Work" (2018) - interruption cost; Bailey and Konstan, "On the Need for Attention-Aware Systems" (2006).

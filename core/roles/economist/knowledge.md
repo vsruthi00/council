@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Every build decision; every decision to extend scope; every decision to defer a feature.
 
-**Source:** Mankiw, "Principles of Economics" (8th ed., 2017), Chapter 1; Bastiat, "That Which Is Seen and That Which Is Not Seen" (1850).
-
 ---
 
 ## Build vs Buy
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Build when: the capability is a core differentiator, no vendor solves the problem adequately, or vendor cost exceeds build cost over the product horizon. Buy (or use open source) when: the capability is commoditized, a vendor solution exists that is demonstrably better maintained, or building it pulls the team off higher-value work. Account for the full cost of building: initial development, testing, documentation, maintenance, and migration if the decision is later reversed.
 
 **When it applies:** Any decision to implement functionality that a third-party product or library could provide.
-
-**Source:** McConnell, "Software Estimation: Demystifying the Black Art" (2006); Christensen, "The Innovator's Dilemma" (1997) - core vs context distinction.
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any comparison between alternatives that have different cost structures over time; any build vs buy decision.
 
-**Source:** Gartner, "Total Cost of Ownership" methodology; Bloch, "Effective Java" (3rd ed., 2018) - the cost of API design choices over time.
-
 ---
 
 ## Sunk Cost Fallacy
@@ -39,8 +33,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Prior investment (time, money, effort) in a direction is not a reason to continue in that direction. The sunk cost is gone regardless of the decision made today. Evaluate each forward path on its future cost and future benefit only. "We already built half of it" is only relevant if completing the half is worth the additional investment on its own merits.
 
 **When it applies:** Any decision involving a partially completed project, an existing vendor contract, or a previously chosen architecture.
-
-**Source:** Kahneman, "Thinking, Fast and Slow" (2011) - sunk cost fallacy and loss aversion; Thaler, "Mental Accounting Matters" (1999).
 
 ---
 
@@ -50,8 +42,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any architecture or pricing decision that scales with usage; any decision about per-unit cost structures.
 
-**Source:** Mankiw, "Principles of Economics" (8th ed., 2017), Chapter 13; Andreessen, "The Pmarca Guide to Startups: Product/Market Fit" (2007).
-
 ---
 
 ## Payoff vs Spend
@@ -60,8 +50,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any investment decision, feature prioritization, or architectural bet.
 
-**Source:** Kahneman and Tversky, "Prospect Theory: An Analysis of Decision under Risk" (Econometrica, 1979); Hammond et al., "Smart Choices" (1999) - expected value analysis.
-
 ---
 
 ## What Are You NOT Doing
@@ -69,5 +57,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** The most important question in a prioritization decision is not "what should we do?" but "what are we giving up?" List the alternatives that the chosen option forecloses. State them explicitly in the output. A decision record that does not name what was foregone is incomplete. This is the economic form of the opportunity cost principle applied as a required output step.
 
 **When it applies:** Every decision record. This is always the last check before the economic analysis is complete.
-
-**Source:** Bastiat, "That Which Is Seen and That Which Is Not Seen" (1850); Drucker, "The Effective Executive" (1967) - time as the scarcest resource.

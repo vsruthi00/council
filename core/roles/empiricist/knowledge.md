@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Step 1 of operation, applied to every claim presented as fact. Also applied to the final recommendation: if nothing could change the recommendation, flag it.
 
-**Source:** Popper, "The Logic of Scientific Discovery" (1959) - demarcation criterion; Popper, "Conjectures and Refutations" (1963) - falsifiability as the standard for empirical content.
-
 ---
 
 ## Hypothesis and null framing
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Every test has a null hypothesis (the default: the intervention does nothing) and an alternative hypothesis (the intervention produces a specific measurable effect). The burden of proof is on the alternative. State both before designing the test, so the test is not designed to confirm the alternative.
 
 **When it applies:** Step 2 of operation. Required before a test design is proposed. Tests designed without a null hypothesis are confirmation exercises, not experiments.
-
-**Source:** Fisher, "Statistical Methods for Research Workers" (1925); Neyman and Pearson, "On the Problem of the Most Efficient Tests of Statistical Hypotheses" (1933) - hypothesis testing framework.
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Step 3 of operation. Evaluate candidate tests against all three criteria before recommending one.
 
-**Source:** Ries, "The Lean Startup" (2011) - minimum viable test and build-measure-learn; Thomke, "Experimentation Works" (2020) - experiment design in organizations.
-
 ---
 
 ## Measurement validity
@@ -40,8 +34,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** When reviewing the test design or any claim backed by a metric. Required any time a behavioral or adoption claim is made.
 
-**Source:** Campbell and Stanley, "Experimental and Quasi-Experimental Designs for Research" (1966) - internal and external validity; Goodhart's Law (1975) - when a measure becomes a target it ceases to be a good measure.
-
 ---
 
 ## Distinguishing correlation from causation
@@ -49,5 +41,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Two things changing together does not mean one caused the other. Before accepting a causal claim, require: (1) a plausible mechanism, (2) temporal precedence (cause precedes effect), and (3) ruling out confounders. If none of the three are present, the claim is correlation, not causation, and must be labeled as such.
 
 **When it applies:** Any time a proposal cites historical data as evidence that an intervention will work. Also any time "users who did X were Y% more likely to do Z" appears as a justification.
-
-**Source:** Pearl and Mackenzie, "The Book of Why" (2018) - causal hierarchy; Shadish et al., "Experimental and Quasi-Experimental Designs for Generalized Causal Inference" (2002).

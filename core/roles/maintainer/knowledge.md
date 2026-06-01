@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Every code review; any code that uses non-obvious language features, unusual patterns, or complex control flow.
 
-**Source:** Martin, "Clean Code" (2008), Chapter 1; Kernighan and Pike, "The Practice of Programming" (1999), Chapter 1; McConnell, "Code Complete" (2nd ed., 2004), Chapter 32.
-
 ---
 
 ## Single Responsibility Principle
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Every unit of code (function, class, module, service) should have one reason to change. A unit with multiple responsibilities is harder to test, harder to understand, harder to reuse, and harder to change without unintended side effects. When a unit does more than one thing, split it. The name of the unit must reflect its single responsibility; if the name requires "and" or "or", the unit has more than one responsibility.
 
 **When it applies:** Any code design or review where a unit is being created or modified.
-
-**Source:** Martin, "Clean Code" (2008), Chapter 3; Martin, "Agile Software Development: Principles, Patterns, and Practices" (2002) - SOLID principles, SRP.
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any code review; any refactoring pass; any naming decision.
 
-**Source:** Martin, "Clean Code" (2008), Chapter 2; Fowler, "Refactoring: Improving the Design of Existing Code" (2nd ed., 2018), Chapter 6 - renaming.
-
 ---
 
 ## Tests as Documentation
@@ -39,8 +33,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Tests are the most reliable documentation of intended behavior because they execute and fail when the behavior changes. A test suite that covers the critical paths of a module tells a new engineer what the module is supposed to do. The absence of tests on a critical path is a documentation gap and a maintenance liability: the next engineer to touch that code does not know what "correct" looks like. Tests must be readable: a test that requires deep understanding of the implementation to understand is not documentation.
 
 **When it applies:** Any module review; any decision about whether to add tests.
-
-**Source:** Beck, "Test-Driven Development: By Example" (2002); Freeman and Pryce, "Growing Object-Oriented Software, Guided by Tests" (2009), Chapter 1.
 
 ---
 
@@ -50,8 +42,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any code review; any module that has been "stable" for a long time (stability often means no one has touched the debt).
 
-**Source:** Cunningham, "Ward Explains Debt Metaphor" (2009); Fowler, "Technical Debt Quadrant" (2009), martinfowler.com.
-
 ---
 
 ## File and Module Size
@@ -60,8 +50,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any file over a few hundred lines; any module that has grown steadily in a single file without refactoring.
 
-**Source:** Martin, "Clean Code" (2008), Chapter 1; McConnell, "Code Complete" (2nd ed., 2004), Chapter 7 - high-quality routines.
-
 ---
 
 ## "Who Reads This in a Year?" Test
@@ -69,5 +57,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Before approving any design or code decision, simulate being a new engineer with no context reading it one year from now. Ask: (1) Is the intent obvious? (2) Are the dependencies clear? (3) Are the edge cases handled and labeled? (4) Could this be changed safely without understanding the full system? If the answer to any of these is no, the code requires improvement before it is maintainable.
 
 **When it applies:** Every code or design review. This is a forcing function, not a guideline.
-
-**Source:** Ousterhout, "A Philosophy of Software Design" (2018), Chapter 2 - complexity and obscurity; Martin, "Clean Code" (2008), Chapter 1.

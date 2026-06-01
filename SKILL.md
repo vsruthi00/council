@@ -54,66 +54,17 @@ Each role subagent is loaded with exactly these files, no more:
    - baked `core/roles/<role>/knowledge.md` is the baseline when no overlay exists.
 4. If the project uses presets or a theme, pass those values from `<project>/.council/presets.md` and `<project>/.council/theme.md` where relevant to the role's concern.
 
-Never load another role's files into a role subagent. Never load the full repo. The Chairman itself loads only what it needs to orchestrate: the four prompt files and the overlay config for the session.
+Never load another role's files into a role subagent. Never load the full repo. The Chairman itself loads only what it needs to orchestrate: the four prompt files and the overlay config for the session. Source citations for the rubrics are kept in `CREDITS.md` at the repo root and are not loaded at deliberation time.
 
-The 6 core roles are: chairman, first-principles, contrarian, empiricist, executor, outsider.
-The 15 bench roles are: accessibility, api-contract, compliance, data-db, data-engineer, designer-ux, economist, integration, maintainer, ml-scientist, ops-sre, performance, pre-mortem, security-redteam, user-customer.
+The 6 core roles are: chairman, first-principles, contrarian, empiricist, executor, outsider. The 15 bench roles and their domain mapping live in `core/prompts/convening.md`.
 
 ## Decision record output format
 
-The Chairman emits this structure at the end of synthesis:
-
-```
-Question: <original question>
-
-Roster: <list of convened roles>
-
-Per-role key points:
-  <role>: <condensed key points, 1-3 lines>
-  ...
-
-Conflicts and resolution:
-  <point of conflict>: <which roles conflicted, how resolved, which role's view prevailed and why>
-  (none if no genuine conflicts)
-
-Options ranked:
-  Criteria: <named criteria fixed before deliberation>
-  1. <option> -- <score or reasoning against criteria>
-  2. <option> -- ...
-  ...
-
-Decision: <the chosen option with justification>
-
-Recorded dissent:
-  <role>: <objection maintained after deliberation>
-  (none if all roles accepted the resolution)
-
-Floor violations:
-  <role>: NO-GO -- <reason>
-  (none if no floor violation; if present, the decision is NO-GO regardless of ranking)
-
-Honest limit: all roles run on the same model family and read the same prompt. This reduces sycophancy and broadens coverage but does not replace independent models or outside humans.
-```
-
-If the decision implies build work, append a spec stub:
-
-```
-Spec stub for cadence:
-  Goal: <one-line goal>
-  Constraints: <key constraints from the deliberation>
-  Open questions: <unresolved questions to address in writing-plans>
-```
-
-This matches what `core/prompts/synthesis.md` instructs the Chairman to emit.
+The Chairman emits the decision record at the end of synthesis. The exact structure (and the optional cadence spec stub) is defined in `core/prompts/synthesis.md`; follow it there.
 
 ## Config
 
-Before running a deliberation on a new project, council may need to know house rules, preset floors, and a theme. How this is collected depends on the environment:
-
-- **Local environment** (`canUseLocalWindow()` returns true in `adapters/claude-code/helper-server/env-detect.js`): offer to open the loopback config helper window (`adapters/claude-code/helper-server/server.js`). The server binds to 127.0.0.1 on an ephemeral port, serves a browser form, and writes overlay files directly into `<project>/.council/`.
-- **Remote or headless** (CI, SSH, cloud sandbox -- `canUseLocalWindow()` returns false): use `core/config/chat-fallback.md`. This Q&A flow collects the same information in chat and writes the same files.
-
-`canUseLocalWindow()` returns false when `REMOTE_SANDBOX`, `CI`, `CODESPACES`, `SSH_CONNECTION`, or `SSH_TTY` is set. In all other cases it returns true.
+Before running a deliberation on a new project, council may need house rules, preset floors, and a theme. In a local environment, offer the loopback config helper window (`adapters/claude-code/helper-server/`); in a remote or headless environment, use the in-chat flow in `core/config/chat-fallback.md`. Both write the same overlay files into `<project>/.council/`. The detection rule (`canUseLocalWindow()`) lives in `adapters/claude-code/helper-server/env-detect.js`.
 
 The user never hand-edits baked ref files under `core/`. The overlay files at `<project>/.council/` and `~/.council/` are the correct place for customization. Config schema and valid preset values are in `core/config/schema.md`.
 

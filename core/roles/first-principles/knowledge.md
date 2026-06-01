@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any time the existing approach "just is" without a traceable justification, or when prior decisions constrain the design without clear logical grounding.
 
-**Source:** Descartes, "Discourse on the Method" (1637) - methodological doubt; Aristotle, "Posterior Analytics" - first causes. Modern application: Musk, "first-principles thinking" interviews (2012-2013), widely attributed.
-
 ---
 
 ## Distinguishing constraints from conventions
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** A true constraint is physically unavoidable (speed of light, memory bounds), logically necessary (if A then B), or legally mandated with direct enforcement. A convention is a past choice that survived because no one challenged it. Label each constraint explicitly; conventions masquerading as constraints block good solutions.
 
 **When it applies:** During the constraint enumeration step. Every constraint must be classified before the solution is derived.
-
-**Source:** Goldratt, "The Goal" (1984) - distinguishing physical constraints from policy constraints; Kim et al., "The Phoenix Project" (2013) - inherited conventions as hidden constraints.
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Whenever a constraint is asserted without a primary source or a concrete test.
 
-**Source:** Kahneman, "Thinking, Fast and Slow" (2011) - availability heuristic and WYSIATI; Cialdini, "Influence" (1984) - consistency bias as a trap.
-
 ---
 
 ## Socratic questioning
@@ -40,8 +34,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** During step 2 of operation: listing constraints. Also during output review, to check that the from-scratch solution does not secretly re-import discarded assumptions.
 
-**Source:** Plato's Socratic dialogues; Paul and Elder, "The Miniature Guide to Critical Thinking" (2006) - Socratic questioning framework.
-
 ---
 
 ## From-scratch derivation discipline
@@ -49,5 +41,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** The from-scratch solution must be derived without looking at the existing approach until after the derivation is complete. If the derivation independently reaches the same answer, that is evidence the existing approach is sound on that point. If it reaches a different answer, that divergence is the key finding.
 
 **When it applies:** Step 5 of operation: deriving the solution. Prevent retrofitting.
-
-**Source:** Polya, "How to Solve It" (1945) - working forward from known givens without anchoring to a proposed answer.

@@ -10,8 +10,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any decision to integrate with an external API, SaaS platform, or data provider.
 
-**Source:** Fowler, "Patterns of Enterprise Application Architecture" (2002) - Gateway pattern; Richardson, "Microservices Patterns" (2018), Chapter 3 - inter-service communication risks.
-
 ---
 
 ## Vendor Lock-In
@@ -19,8 +17,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Lock-in occurs when switching a vendor requires rewriting business logic, migrating data in a proprietary format, or losing functionality that the vendor uniquely provides. Assess lock-in on two dimensions: (1) data portability (can the data be exported in a standard format?), (2) logic portability (is business logic encoded in vendor-specific constructs that must be rewritten to switch?). Prefer integrations where the vendor is a replaceable pipe, not a load-bearing wall.
 
 **When it applies:** Any decision to use a vendor for a function that is core to the product or that stores significant data.
-
-**Source:** Fowler, "Patterns of Enterprise Application Architecture" (2002) - Anti-Corruption Layer; Richardson, "Microservices Patterns" (2018) - strangler fig for replacing vendors.
 
 ---
 
@@ -30,8 +26,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any integration that involves message templates (email, SMS, push), routing rules, or workflow configuration.
 
-**Source:** Humble and Farley, "Continuous Delivery" (2010) - everything in version control; Twelve-Factor App, "Config" (12factor.net).
-
 ---
 
 ## Webhook Reliability and Idempotency
@@ -39,8 +33,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Webhooks are delivered at-least-once by most providers: the same event may be delivered twice, out of order, or with a delay. Every webhook handler must be idempotent: processing the same event ID twice produces the same result as processing it once. Implement using a deduplication table keyed on the provider's event ID. Check that the handler returns a 2xx response promptly (within the provider's timeout) and processes the event asynchronously if the work is slow.
 
 **When it applies:** Any endpoint that receives webhook events from a third-party provider (payment processors, communication platforms, auth providers).
-
-**Source:** Stripe, "Webhook Best Practices" (stripe.com/docs/webhooks/best-practices); Twilio, "Webhook Reliability" documentation; Richardson, "Microservices Patterns" (2018) - transactional outbox pattern.
 
 ---
 
@@ -50,8 +42,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any integration that is in the path of a user action or a critical background job.
 
-**Source:** Netflix, "Hystrix" circuit breaker documentation; Nygard, "Release It!" (2nd ed., 2018) - stability patterns; AWS, "Exponential Backoff and Jitter" blog post (aws.amazon.com, 2015).
-
 ---
 
 ## Third-Party PII Processors
@@ -60,8 +50,6 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 
 **When it applies:** Any integration where personal data is transmitted to a third-party service: analytics, error monitoring, email delivery, CRM, support ticketing.
 
-**Source:** EU GDPR Article 28 - processor obligations; EDPB, "Guidelines on the use of processors" (2020).
-
 ---
 
 ## Integration Monitoring
@@ -69,5 +57,3 @@ Reference rubric loaded at deliberation time. Named principles below; apply the 
 **Principle:** Third-party integrations fail silently: the vendor's API returns 200 but delivers nothing, or the webhook stops arriving, or the rate limit is hit and requests are quietly dropped. Every integration must have an independent health check that verifies end-to-end delivery, not just that the API call succeeded. Define: who is paged when the integration fails, what the recovery procedure is, and what the acceptable downtime is.
 
 **When it applies:** Any integration that is critical to product functionality or that processes user data.
-
-**Source:** Beyer et al., "Site Reliability Engineering" (2016), Chapter 6 - monitoring distributed systems; Nygard, "Release It!" (2018) - integration point failure patterns.
